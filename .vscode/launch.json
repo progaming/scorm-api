@@ -7,9 +7,9 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch",
+            "name": "Debug",
             "cwd": "${workspaceFolder}",
-            "program": "${workspaceRoot}/index.js",
+            "program": "${workspaceRoot}/test.js",
             "outFiles": [ "${workspaceRoot}/.compiled/**/*.js" ]
         }
     ]
