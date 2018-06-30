@@ -63,10 +63,10 @@ class Scorm {
         this.cmi = cmi;
     }
 
-    // e.g. data = '[{"element": "cmi.suspend_data","value":"Hello world"}]';
+    // e.g. data = [{"element": "cmi.suspend_data","value":"Hi"}];
     parse(data) {
         let holder = {};
-        JSON.parse(data).forEach(entry => {
+        data.forEach(entry => {
             const nodes = entry.element.split('.');
             const lastNode = nodes.pop();
             const baseObject = this.getBase(entry.element, holder);

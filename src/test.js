@@ -5,7 +5,7 @@ let errorCode = "0";
 let errorString = "";
 
 // example of http response
-const resp = '[{"element": "cmi.suspend_data","value":"Hello world"},{"element":"cmi.core.score.raw","value":50}]';
+const resp = [{"element": "cmi.suspend_data","value":"Hi"}];
 
 scorm.init(scorm.parse(resp));
 scorm.LMSInitialize();
