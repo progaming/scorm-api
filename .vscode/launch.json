@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "Debug",
             "cwd": "${workspaceFolder}",
-            "program": "${workspaceRoot}/test.js",
+            "program": "${workspaceRoot}/src/test.js",
             "outFiles": [ "${workspaceRoot}/.compiled/**/*.js" ]
         }
     ]

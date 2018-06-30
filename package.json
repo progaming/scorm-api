@@ -1,11 +1,12 @@
 {
   "name": "scorm-api",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
-  "main": "Scorm.js",
+  "main": "build/index.js",
   "scripts": {
-    "test": "babel-node test.js",
-    "compile": "babel *.js --out-dir .compiled --source-maps --watch"
+    "build": "babel src -d build --copy-files",
+    "compile": "babel src -d .compiled --source-maps --watch",
+    "test": "babel-node src/test.js"
   },
   "author": "",
   "license": "ISC",
