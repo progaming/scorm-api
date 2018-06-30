@@ -7,22 +7,7 @@ let errorString = "";
 // example of http response
 const resp = '[{"element": "cmi.suspend_data","value":"Hello world"},{"element":"cmi.core.score.raw","value":50}]';
 
-// convert the response into cmi object
-let holder = {};
-JSON.parse(resp).forEach(entry => {
-    let nodes = entry.element.split('.');
-    const lastNode = nodes.pop();
-
-    // make sure the target object is non-null
-    let target = nodes.reduce((obj, key) => {
-        obj[key] = obj[key] || {};
-        return obj[key];
-    }, holder);
-
-    target[lastNode] = entry.value;
-});
-
-scorm.init(holder.cmi);
+scorm.init(scorm.parse(resp));
 scorm.LMSInitialize();
 scorm.LMSSetValue('cmi', 'test');
 errorCode = scorm.LMSGetLastError();

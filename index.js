@@ -20,7 +20,7 @@ class Scorm {
     LMSGetValue = (element) => {
         this.errorCode = '0';
 
-        const baseObject = this.getBase(element);
+        const baseObject = this.getBase(element, this);
         const lastChild = element.split('.').pop();
         const value = baseObject[lastChild];
 
@@ -36,7 +36,7 @@ class Scorm {
             return 'false';
         }
 
-        const baseObject = this.getBase(element);
+        const baseObject = this.getBase(element, this);
         const lastNode = element.split('.').pop();
         baseObject[lastNode] = value;
 
@@ -63,10 +63,23 @@ class Scorm {
         this.cmi = cmi;
     }
 
+    // e.g. data = '[{"element": "cmi.suspend_data","value":"Hello world"}]';
+    parse = (data) => {
+        let holder = {};
+        JSON.parse(data).forEach(entry => {
+            const nodes = entry.element.split('.');
+            const lastNode = nodes.pop();
+            const baseObject = this.getBase(entry.element, holder);
+        
+            baseObject[lastNode] = entry.value;
+        });
+        return holder.cmi;
+    }
+
     // this returns non-null base object of the path given
     // e.g. cmi.core.score.raw -> non-null cmi.core.score
-    getBase = (element) => {
-        let nodes = element.split('.');
+    getBase = (element, scope) => {
+        const nodes = element.split('.');
         // to get base, remove the last element
         nodes.pop();
 
@@ -74,7 +87,7 @@ class Scorm {
         return nodes.reduce((obj, key) => {
             obj[key] = obj[key] || {};
             return obj[key];
-        }, this);
+        }, scope);
     }
 
     flatten = (o) => {
