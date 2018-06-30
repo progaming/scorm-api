@@ -1,4 +1,4 @@
-import {errorString} from './config';
+import { errorString } from './config';
 
 class Scorm {
     constructor(commitHandler) {
@@ -7,17 +7,17 @@ class Scorm {
         this.commitHandler = commitHandler;
     }
 
-    LMSInitialize = () => {
+    LMSInitialize() {
         this.errorCode = '0';
         return 'true';
     }
 
-    LMSFinish = () => {
+    LMSFinish() {
         this.errorCode = '0';
         return 'true';
     }
 
-    LMSGetValue = (element) => {
+    LMSGetValue(element) {
         this.errorCode = '0';
 
         const baseObject = this.getBase(element, this);
@@ -27,7 +27,7 @@ class Scorm {
         return value ? value : '';
     }
 
-    LMSSetValue = (element, value) => {
+    LMSSetValue(element, value) {
         this.errorCode = '0';
 
         // setting the root element is not allowed
@@ -43,34 +43,34 @@ class Scorm {
         return "true";
     }
 
-    LMSCommit = () => {
+    LMSCommit() {
         this.commitHandler(JSON.stringify(this.flatten({ cmi: this.cmi })));
     }
 
-    LMSGetLastError = () => {
+    LMSGetLastError() {
         return this.errorCode;
     }
 
-    LMSGetErrorString = (param) => {
+    LMSGetErrorString(param) {
         return param !== '' ? errorString[param] : '';
     }
 
-    LMSGetDiagnostic = () => {
+    LMSGetDiagnostic() {
         return '';
     }
 
-    init = (cmi) => {
+    init(cmi) {
         this.cmi = cmi;
     }
 
     // e.g. data = '[{"element": "cmi.suspend_data","value":"Hello world"}]';
-    parse = (data) => {
+    parse(data) {
         let holder = {};
         JSON.parse(data).forEach(entry => {
             const nodes = entry.element.split('.');
             const lastNode = nodes.pop();
             const baseObject = this.getBase(entry.element, holder);
-        
+
             baseObject[lastNode] = entry.value;
         });
         return holder.cmi;
@@ -78,7 +78,7 @@ class Scorm {
 
     // this returns non-null base object of the path given
     // e.g. cmi.core.score.raw -> non-null cmi.core.score
-    getBase = (element, scope) => {
+    getBase(element, scope) {
         const nodes = element.split('.');
         // to get base, remove the last element
         nodes.pop();
@@ -90,7 +90,7 @@ class Scorm {
         }, scope);
     }
 
-    flatten = (o) => {
+    flatten(o) {
         let toReturn = {};
 
         for (let i in o) {
