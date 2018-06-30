@@ -44,7 +44,7 @@ class Scorm {
     }
 
     LMSCommit() {
-        this.commitHandler(JSON.stringify(this.flatten({ cmi: this.cmi })));
+        this.commitHandler(this.flatten({ cmi: this.cmi }));
     }
 
     LMSGetLastError() {
