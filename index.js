@@ -4,14 +4,32 @@ let scorm = new Scorm(data => {console.log(data)});
 let errorCode = "0";
 let errorString = "";
 
-scorm.setup(JSON.parse('[{"element": "cmi.suspend_data","value":"Hello world"},{"element":"cmi.core.score.raw","value":50}]'));
+// example of http response
+const resp = '[{"element": "cmi.suspend_data","value":"Hello world"},{"element":"cmi.core.score.raw","value":50}]';
+
+// convert the response into cmi object
+let holder = {};
+JSON.parse(resp).forEach(entry => {
+    let nodes = entry.element.split('.');
+    const lastChild = nodes.pop();
+
+    // make sure the target object is non-null
+    let target = nodes.reduce((obj, key) => {
+        obj[key] = obj[key] || {};
+        return obj[key];
+    }, holder);
+
+    target[lastChild] = entry.value;
+});
+
+scorm.init(holder.cmi);
 scorm.LMSInitialize();
 scorm.LMSSetValue('cmi', 'test');
 errorCode = scorm.LMSGetLastError();
 errorString = scorm.LMSGetErrorString(errorCode);
 
 scorm.LMSSetValue('cmi.suspend_data', 'Hello world');
-scorm.LMSSetValue('cmi.core.score.raw', 50);
+scorm.LMSSetValue('cmi.core.score.raw', 80);
 scorm.LMSSetValue('cmi.core.score.max', 100);
 scorm.LMSSetValue('cmi.core.score.min', 0);
 scorm.LMSSetValue('cmi.interaction.0.count', 1);
