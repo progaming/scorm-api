@@ -1,6 +1,6 @@
 import Scorm from './index';    
 
-let scorm = new Scorm(data => {console.log(data)});
+let scorm = new Scorm(data => console.log(data), () => console.log('finished'));
 let errorCode = "0";
 let errorString = "";
 

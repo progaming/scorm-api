@@ -1,10 +1,11 @@
 import { errorString } from './config';
 
 class Scorm {
-    constructor(commitHandler) {
+    constructor(commitHandler, finishHandler) {
         this.cmi = {};
         this.errorCode = '0';
         this.commitHandler = commitHandler;
+        this.finishHandler = finishHandler;
     }
 
     LMSInitialize() {
@@ -14,6 +15,7 @@ class Scorm {
 
     LMSFinish() {
         this.errorCode = '0';
+        this.finishHandler();
         return 'true';
     }
 
